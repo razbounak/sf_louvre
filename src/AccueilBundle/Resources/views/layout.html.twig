@@ -8,18 +8,10 @@
 
     {% block stylesheets %}
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/ui-lightness/jquery-ui.css" type="text/css" media="all"/>
         <link rel="stylesheet" href="{{ asset('css/css.css') }}">
     {% endblock %}
-    <script>
-        $(function(){
-            $('#div').hide();
-        });
-    </script>
-    <!--<script>
-            $(function() {
-                $( "#datepicker" ).datepicker();
-            });
-        </script>-->
 </head>
 
 <body>
@@ -44,7 +36,6 @@
     </nav>
 
     <div class="body">
-        <p id="div">Hello</p>
         {% block body %}
 
         {% endblock %}
@@ -59,6 +50,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script>
+        $(function() {
+            $("form input.date").datepicker({
+                dateFormat: 'dd/mm/yy',
+                firstDay:1
+            });
+        });
+    </script>
 {% endblock %}
 </body>
 </html>

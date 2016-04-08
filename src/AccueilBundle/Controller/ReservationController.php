@@ -14,14 +14,10 @@ class ReservationController extends Controller
      */
     public function dateAction(Request $request)
     {
-        $data = array();
-        $form = $this->createFormBuilder($data)
-            ->add('date', DateType::class)
-            ->getForm();
+        $form = $this->createForm(DateType::class);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            $data = $form->getData();
         }
 
         return $this->render('AccueilBundle:Reservation:date.html.twig', array(
