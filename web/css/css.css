@@ -1,0 +1,15 @@
+.body{
+    margin-top:70px;
+}
+.thumbnail{
+    height:210px;
+}
+.texte{
+    height:120px;
+}
+.nav li{
+    font-size:1.3em;
+}
+.btn-default{
+    pointer-events: none;
+}

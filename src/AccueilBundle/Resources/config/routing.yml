@@ -1,0 +1,7 @@
+accueil_homepage:
+    path:     /
+    defaults: { _controller: AccueilBundle:Default:index }
+
+reservation_date:
+    path:     /reservation/
+    defaults: { _controller: AccueilBundle:Reservation:date }

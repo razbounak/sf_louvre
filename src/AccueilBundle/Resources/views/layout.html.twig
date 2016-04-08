@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Musée du Louvre{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="{{ asset('css/css.css') }}">
+        <script>
+            $(function() {
+                $( "#datepicker" ).datepicker();
+            });
+        </script>
+    {% endblock %}
+</head>
+
+<body>
+<div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Musée du louvre</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ path('reservation_date') }}">Réservation</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="body">
+        {% block body %}
+
+        {% endblock %}
+    </div>
+
+    <footer>
+        <p>Thomas Bredillet © {{ 'now'|date('Y') }} <i>Musée du Louvre</i></p>
+    </footer>
+</div>
+
+{% block javascripts %}
+    <script>
+        jQuery(document).ready(function() {
+            jQuery("#calendar").datepicker({
+                beforeShowDay: function (date) {
+                    if (date.getDay() == 1 || date.getDay() == 4) { // La semaine commence à 0 = Dimanche
+                        return [false, ''];
+                    } else {
+                        return [true, ''];
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+{% endblock %}
+</body>
+</html>

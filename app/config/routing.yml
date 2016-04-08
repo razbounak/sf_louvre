@@ -1,0 +1,3 @@
+accueil:
+    resource: "@AccueilBundle/Resources/config/routing.yml"
+    prefix:   /
