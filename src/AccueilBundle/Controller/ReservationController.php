@@ -5,7 +5,7 @@ namespace AccueilBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use AccueilBundle\Form\DatepickType;
 
 class ReservationController extends Controller
 {
@@ -14,7 +14,7 @@ class ReservationController extends Controller
      */
     public function dateAction(Request $request)
     {
-        $form = $this->createForm(DateType::class);
+        $form = $this->createForm(DatepickType::class);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
