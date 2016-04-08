@@ -9,10 +9,15 @@
         <div class="row">
             <div class="jumbotron">
                 <h2>Choississez votre date de réservation</h2>
+
+                <p>Date: <input type="text" id="datepicker"></p>
+
+                <p id="div">Hello</p>
+{#
                 {{ form_start(date) }}
-                    <p>Date: <input type="text" id="datepicker"></p>
                     {{ form_errors(date) }}
                 {{ form_end(date) }}
+#}
             </div>
         </div>
     </div>
