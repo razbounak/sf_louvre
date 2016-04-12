@@ -48,15 +48,13 @@
 
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script>
-        $(function() {
-            $("form input.date").datepicker({
-                dateFormat: 'dd/mm/yy',
-                firstDay:1
-            }).attr("readonly","readonly");
-        });
+        /*$('.date').datepicker({
+            dateFormat: 'dd/mm/yy',
+            firstDay: 1
+        });*/
     </script>
 {% endblock %}
 </body>

@@ -5,3 +5,7 @@ accueil_homepage:
 reservation_date:
     path:     /reservation/
     defaults: { _controller: AccueilBundle:Reservation:date }
+
+reservation_billet:
+    path:     /reservation/{date}/{dj}/{places}
+    defaults: { _controller: AccueilBundle:Reservation:billet }

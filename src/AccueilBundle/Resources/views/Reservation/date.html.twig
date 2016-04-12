@@ -9,9 +9,51 @@
         <div class="row">
             <div class="jumbotron">
                 <h2>Choississez votre date de réservation</h2>
-                    {{ form_start(date) }}
-                        {{ form_errors(date) }}
-                    {{ form_end(date) }}
+                    <form action="" method="get">
+                        <strong>Date de la visite :</strong><br>
+                        <input type="text" class="date" name="date"><br><br>
+
+                        <strong>Demi journée :</strong><br>
+                        <input type="radio" name="demijournee" value="oui" id="oui" />
+                        <label for="oui">Oui</label><br>
+
+                        <input type="radio" name="demijournee" value="non" id="non" checked="checked"/>
+                        <label for="non">Non</label><br><br>
+
+                        <strong>Nombre de places</strong><br>
+                        <input type="number" name="places"/><br><br>
+
+                        <input type="submit" value="Valider">
+                    </form>
+
+                <script>
+                    function twRequeteVariable(sVariable) {
+                    // Éliminer le "?"
+                    var sReq = window.location.search.substring(1);
+                    // Matrice de la requête
+                    var aReq = sReq.split("&");
+                    // Boucle les variables
+                    for (var i=0;i<aReq.length;i++) {
+                    // Matrice de la variables / valeur
+                    var aVar = aReq[i].split("=");
+                    // Retourne la valeur si la variable
+                    // demandée = la variable de la boucle
+                    if(aVar[0] == sVariable){return aVar[1];}
+                    }
+                    // Aucune variable de trouvée.
+                    return(false);
+                    }
+
+                    var date = twRequeteVariable("date");
+                    var dj = twRequeteVariable("demijournee");
+                    var places = twRequeteVariable("places");
+
+                    if(date && dj && places)
+                    {
+                        document.location.href=date+"/"+dj+"/"+places;
+                    }
+
+                </script>
             </div>
         </div>
     </div>
