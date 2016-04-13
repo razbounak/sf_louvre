@@ -1,4 +1,4 @@
-/*.body{
+.body{
     margin-top:70px;
 }
 .thumbnail{
@@ -12,4 +12,4 @@
 }
 .btn-default{
     pointer-events: none;
-}*/
+}
