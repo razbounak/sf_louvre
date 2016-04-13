@@ -3,7 +3,7 @@
 namespace AccueilBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -19,8 +19,8 @@ class BilletType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
-            ->add('dateNaissance', DateType::class)
-            ->add('tarifs', EntityType::class, array('class' => 'AccueilBundle:Tarifs', 'property' => 'nom', 'multiple' => false, 'expanded' => false))
+            ->add('dateNaissance', BirthdayType::class)
+            ->add('pays', EntityType::class, array('class' => 'AccueilBundle:Pays', 'choice_label' => 'nomFr', 'multiple' => false, 'expanded' => false))
         ;
     }
     

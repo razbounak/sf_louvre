@@ -5,15 +5,11 @@ namespace AccueilBundle\Controller;
 use AccueilBundle\Entity\Billet;
 use AccueilBundle\Entity\Reservation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AccueilBundle\Form\ReservationType;
 
 class ReservationController extends Controller
 {
-    /**
-     * @Route("/")
-     */
     public function dateAction()
     {
         return $this->render('AccueilBundle:Reservation:date.html.twig');
@@ -23,24 +19,22 @@ class ReservationController extends Controller
     {
         $reservation = new Reservation();
 
-        $i = 0;
-        while($i != $places) {
+        for($i = 0; $i != $places; $i++) {
             $billet[$i] = new Billet();
             $reservation->getBillet()->add($billet[$i]);
             $billet[$i]->setReservation($reservation);
-            $i++;
         }
 
         $form = $this->createForm(ReservationType::class, $reservation);
 
         if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $reservation->setDemiJournee($dj);
+            //$reservation->setDateResa($date);
             $em->persist($reservation);
-            $i = 0;
-            while($i != $places)
+            for($i = 0; $i != $places; $i++)
             {
                 $em->persist($billet[$i]);
-                $i++;
             }
             $em->flush();
 

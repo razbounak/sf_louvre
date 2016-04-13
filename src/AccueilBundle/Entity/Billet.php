@@ -15,9 +15,15 @@ class Billet
 {
     /**
      * @ORM\ManyToOne(targetEntity="AccueilBundle\Entity\Reservation")
-     * $ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $reservation;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="AccueilBundle\Entity\Pays")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $pays;
 
     /**
      * @var int
@@ -49,11 +55,9 @@ class Billet
      */
     private $dateNaissance;
 
-    private $tarifs;
-
     public function __construct()
     {
-        $this->tarifs = new ArrayCollection();
+        $this->pays = new ArrayCollection();
     }
 
     /**
@@ -158,8 +162,26 @@ class Billet
         return $this->reservation;
     }
 
-    public function getTarifs()
+    /**
+     * Set pays
+     *
+     * @param \AccueilBundle\Entity\Pays $pays
+     * @return Billet
+     */
+    public function setPays(\AccueilBundle\Entity\Pays $pays)
     {
-        return $this->tarifs;
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return \AccueilBundle\Entity\Pays 
+     */
+    public function getPays()
+    {
+        return $this->pays;
     }
 }

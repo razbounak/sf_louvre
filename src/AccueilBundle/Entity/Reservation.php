@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Reservation
 {
-
     /**
      * @var int
      *
@@ -37,7 +36,17 @@ class Reservation
      */
     private $dateJour;
 
-    protected $billet;
+    /**
+     * @var boolean
+     * @ORM\Column(name="demiJournee", type="boolean")
+     */
+    private $demiJournee;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="dateResa", type="date", nullable=true)
+     */
+    private $dateResa;
     
     public function __construct()
     {
@@ -104,5 +113,51 @@ class Reservation
     public function getBillet()
     {
         return $this->billet;
+    }
+
+    /**
+     * Set demiJournee
+     *
+     * @param boolean $demiJournee
+     * @return Reservation
+     */
+    public function setDemiJournee($demiJournee)
+    {
+        $this->demiJournee = $demiJournee;
+
+        return $this;
+    }
+
+    /**
+     * Get demiJournee
+     *
+     * @return boolean 
+     */
+    public function getDemiJournee()
+    {
+        return $this->demiJournee;
+    }
+
+    /**
+     * Set dateResa
+     *
+     * @param \DateTime $dateResa
+     * @return Reservation
+     */
+    public function setDateResa($dateResa)
+    {
+        $this->dateResa = $dateResa;
+
+        return $this;
+    }
+
+    /**
+     * Get dateResa
+     *
+     * @return \DateTime
+     */
+    public function getDateResa()
+    {
+        return $this->dateResa;
     }
 }

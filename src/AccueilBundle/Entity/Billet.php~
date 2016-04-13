@@ -3,6 +3,7 @@
 namespace AccueilBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Billet
@@ -14,8 +15,15 @@ class Billet
 {
     /**
      * @ORM\ManyToOne(targetEntity="AccueilBundle\Entity\Reservation")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $reservation;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="AccueilBundle\Entity\Pays")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $pays;
 
     /**
      * @var int
@@ -46,6 +54,11 @@ class Billet
      * @ORM\Column(name="dateNaissance", type="date")
      */
     private $dateNaissance;
+
+    public function __construct()
+    {
+        $this->pays = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -124,5 +137,28 @@ class Billet
     public function getDateNaissance()
     {
         return $this->dateNaissance;
+    }
+
+    /**
+     * Set reservation
+     *
+     * @param \AccueilBundle\Entity\Reservation $reservation
+     * @return Billet
+     */
+    public function setReservation(\AccueilBundle\Entity\Reservation $reservation = null)
+    {
+        $this->reservation = $reservation;
+
+        return $this;
+    }
+
+    /**
+     * Get reservation
+     *
+     * @return \AccueilBundle\Entity\Reservation 
+     */
+    public function getReservation()
+    {
+        return $this->reservation;
     }
 }

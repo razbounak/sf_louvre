@@ -7,7 +7,7 @@
     <title>{% block title %}Musée du Louvre{% endblock %}</title>
 
     {% block stylesheets %}
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/ui-lightness/jquery-ui.css" type="text/css" media="all"/>
         <link rel="stylesheet" href="{{ asset('css/css.css') }}">
@@ -48,13 +48,44 @@
 
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
     <script>
-        /*$('.date').datepicker({
-            dateFormat: 'dd/mm/yy',
-            firstDay: 1
-        });*/
+        function DisableTuesday(date) {
+
+            var day = date.getDay();
+            if (day == 2) {
+
+                return [false] ;
+
+            } else {
+
+                return nationalDays(date);
+            }
+
+        }
+
+        natDays = [
+            [5, 1, 'fr'], [11, 1, 'fr'], [12, 25, 'fr']
+        ];
+
+        function nationalDays(date) {
+            for (i = 0; i < natDays.length; i++) {
+                if (date.getMonth() == natDays[i][0] - 1
+                        && date.getDate() == natDays[i][1]) {
+                    return [false, natDays[i][2] + '_day'];
+                }
+            }
+            return [true, ''];
+        }
+
+        $('.date').datepicker({
+            dateFormat: 'yy-mm-dd',
+            firstDay: 1,
+            minDate:0,
+            beforeShowDay: DisableTuesday
+        });
     </script>
 {% endblock %}
 </body>

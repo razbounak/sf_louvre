@@ -9,16 +9,57 @@
 {% block body %}
     <div class="menu">
         <div class="row">
-            <div class="jumbotron">
-                <h2>Choississez votre type de billets</h2>
-                <h3>{{ date }}</h3>
-                <h3>Demi journée : {{ dj }}</h3>
-                {{ form_start(form) }}
-                {{ form_errors(form) }}
+            <div class="col-md-offset-1 col-md-10">
+                <div class="jumbotron">
+                    <h1>Choississez votre type de billets</h1>
+                    <h2>{{ date }}</h2>
+                    {% if dj == 1 %}
+                        <h2>Demi journée</h2>
+                    {% elseif dj == 0 %}
+                        <h2>Journée entière</h2>
+                    {% endif %}
 
-                {{ form_row(form.email) }}
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                    {{ form_errors(form) }}
 
-                {{ form_end(form) }}
+                    <div class="form-group">
+                        {{ form_label(form.email, "Email", {'label_attr': {'class': 'col-sm-6 control-label'}}) }}
+                        <div class="col-sm-4">
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}<br>
+                        </div>
+                    </div>
+
+                        {% for gens in form.billet %}
+                        <div class="form-group">
+                            {{ form_label(gens.nom, "Nom", {'label_attr': {'class': 'col-sm-6 control-label'}}) }}
+                            <div class="col-sm-3">
+                                {{ form_widget(gens.nom, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(gens.nom, "Prénom", {'label_attr': {'class': 'col-sm-6 control-label'}}) }}
+                            <div class="col-sm-3">
+                                {{ form_widget(gens.prenom) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(gens.nom, "Date de naissance", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                            <div class="col-md-3">
+                                {{ form_widget(gens.dateNaissance) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(gens.pays, "Pays", {'label_attr': {'class': 'col-sm-6 control-label'}}) }}
+                            <div class="col-md-3">
+                                {{ form_widget(gens.pays) }}
+                            </div>
+                        </div><br><br>
+                        {% endfor %}
+
+                        {{ form_rest(form) }}
+                        {{ form_widget(form.save) }}
+                    </form>
+                </div>
             </div>
         </div>
     </div>

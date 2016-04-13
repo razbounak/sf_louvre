@@ -19,7 +19,6 @@ class ReservationType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('dateJour', DateType::class)
             ->add('billet', CollectionType::class, array(
                 'entry_type' => BilletType::class
             ))

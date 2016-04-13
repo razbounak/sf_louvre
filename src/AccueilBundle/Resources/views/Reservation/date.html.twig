@@ -7,54 +7,56 @@
 {% block body %}
     <div class="menu">
         <div class="row">
-            <div class="jumbotron">
+            <div class="col-md-offset-3 col-md-6">
+                <div class="jumbotron">
                 <h2>Choississez votre date de réservation</h2>
                     <form action="" method="get">
                         <strong>Date de la visite (dd-mm-yyyy) :</strong><br>
-                        <input type="text" class="date" name="date"><br><br>
+                        <input type="text" class="date form-control" name="date"><br><br>
 
                         <strong>Demi journée (à partir de 14h) :</strong><br>
-                        <input type="radio" name="demijournee" value="oui" id="oui" />
-                        <label for="oui">Oui</label><br>
+                        <input type="radio" name="demijournee" class="form-horizontal" value="1" id="1" />
+                        <label for="1">Oui</label><br>
 
-                        <input type="radio" name="demijournee" value="non" id="non" checked="checked"/>
-                        <label for="non">Non</label><br><br>
+                        <input type="radio" name="demijournee" class="form-horizontal" value="0" id="0" checked="checked"/>
+                        <label for="0">Non</label><br>
 
                         <strong>Nombre de places</strong><br>
-                        <input type="number" name="places"/><br><br>
+                        <input type="number" class="form-control" name="places"/><br><br>
 
-                        <input type="submit" value="Valider">
+                        <button type="submit" class="btn-default btn">Valider</button>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <script>
-                    function twRequeteVariable(sVariable) {
-                    // Éliminer le "?"
-                    var sReq = window.location.search.substring(1);
-                    // Matrice de la requête
-                    var aReq = sReq.split("&");
-                    // Boucle les variables
-                    for (var i=0;i<aReq.length;i++) {
+        <script>
+            function twRequeteVariable(sVariable) {
+                // Éliminer le "?"
+                var sReq = window.location.search.substring(1);
+                // Matrice de la requête
+                var aReq = sReq.split("&");
+                // Boucle les variables
+                for (var i=0;i<aReq.length;i++) {
                     // Matrice de la variables / valeur
                     var aVar = aReq[i].split("=");
                     // Retourne la valeur si la variable
                     // demandée = la variable de la boucle
                     if(aVar[0] == sVariable){return aVar[1];}
-                    }
-                    // Aucune variable de trouvée.
-                    return(false);
-                    }
+                }
+                // Aucune variable de trouvée.
+                return(false);
+            }
 
-                    var date = twRequeteVariable("date");
-                    var dj = twRequeteVariable("demijournee");
-                    var places = twRequeteVariable("places");
+            var date = twRequeteVariable("date");
+            var dj = twRequeteVariable("demijournee");
+            var places = twRequeteVariable("places");
 
-                    if(date && dj && places)
-                    {
-                        document.location.href=date+"/"+dj+"/"+places;
-                    }
+            if(date && dj && places)
+            {
+                document.location.href=date+"/"+dj+"/"+places;
+            }
 
-                </script>
-            </div>
-        </div>
-    </div>
+        </script>
 {% endblock %}
