@@ -3,6 +3,7 @@
 namespace AccueilBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Billet
@@ -47,6 +48,13 @@ class Billet
      * @ORM\Column(name="dateNaissance", type="date")
      */
     private $dateNaissance;
+
+    private $tarifs;
+
+    public function __construct()
+    {
+        $this->tarifs = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -148,5 +156,10 @@ class Billet
     public function getReservation()
     {
         return $this->reservation;
+    }
+
+    public function getTarifs()
+    {
+        return $this->tarifs;
     }
 }

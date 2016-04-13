@@ -38,7 +38,7 @@ class Reservation
     private $dateJour;
 
     protected $billet;
-
+    
     public function __construct()
     {
         $this->dateJour = new \DateTime();

@@ -3,12 +3,10 @@
 namespace AccueilBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class BilletType extends AbstractType
+class TarifsType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -18,9 +16,6 @@ class BilletType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('prenom')
-            ->add('dateNaissance', DateType::class)
-            ->add('tarifs', EntityType::class, array('class' => 'AccueilBundle:Tarifs', 'property' => 'nom', 'multiple' => false, 'expanded' => false))
         ;
     }
     
@@ -30,7 +25,7 @@ class BilletType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AccueilBundle\Entity\Billet'
+            'data_class' => 'AccueilBundle\Entity\Tarifs'
         ));
     }
 }
