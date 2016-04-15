@@ -2,6 +2,7 @@
 
 namespace AccueilBundle\Controller;
 
+use AccueilBundle\AccueilBundle;
 use AccueilBundle\Entity\Billet;
 use AccueilBundle\Entity\Reservation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,6 +18,11 @@ class ReservationController extends Controller
 
     public function billetAction(Request $request, $date, $dj, $places)
     {
+        // Test
+        $repositoryBillet = $this->getDoctrine()->getManager()->getRepository('AccueilBundle:Reservation')->countToday($date);
+        // Test
+
+
         $reservation = new Reservation();
 
         for($i = 0; $i != $places; $i++) {
@@ -30,7 +36,8 @@ class ReservationController extends Controller
         if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $reservation->setDemiJournee($dj);
-            //$reservation->setDateResa($date);
+            $date = date_create_from_format('Y-m-d', $date);
+            $reservation->setDateResa($date);
             $em->persist($reservation);
             for($i = 0; $i != $places; $i++)
             {
@@ -45,7 +52,8 @@ class ReservationController extends Controller
             'date' => $date,
             'dj' => $dj,
             'places' => $places,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'dateResa' => $repositoryBillet
         ));
     }
 }

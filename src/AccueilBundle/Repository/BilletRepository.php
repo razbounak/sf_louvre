@@ -2,6 +2,7 @@
 
 namespace AccueilBundle\Repository;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
 
 /**
