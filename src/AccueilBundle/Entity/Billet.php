@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Billet
 {
     /**
-     * @ORM\ManyToOne(targetEntity="AccueilBundle\Entity\Reservation")
+     * @ORM\ManyToOne(targetEntity="AccueilBundle\Entity\Reservation", inversedBy="billets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $reservation;

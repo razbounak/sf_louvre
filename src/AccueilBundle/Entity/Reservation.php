@@ -14,6 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Reservation
 {
     /**
+     * @ORM\OneToMany(targetEntity="AccueilBundle\Entity\Billet", mappedBy="Reservation")
+     */
+    private $billets;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -159,5 +164,38 @@ class Reservation
     public function getDateResa()
     {
         return $this->dateResa;
+    }
+
+    /**
+     * Add billets
+     *
+     * @param \AccueilBundle\Entity\Billet $billets
+     * @return Reservation
+     */
+    public function addBillet(\AccueilBundle\Entity\Billet $billets)
+    {
+        $this->billets[] = $billets;
+
+        return $this;
+    }
+
+    /**
+     * Remove billets
+     *
+     * @param \AccueilBundle\Entity\Billet $billets
+     */
+    public function removeBillet(\AccueilBundle\Entity\Billet $billets)
+    {
+        $this->billets->removeElement($billets);
+    }
+
+    /**
+     * Get billets
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBillets()
+    {
+        return $this->billets;
     }
 }

@@ -14,6 +14,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Reservation
 {
     /**
+     * @ORM\OneToMany(targetEntity="AccueilBundle\Entity\Billet", mappedBy="Reservation")
+     */
+    private $billets;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -44,7 +49,7 @@ class Reservation
 
     /**
      * @var \DateTime
-     * @ORM\Column(name="dateResa", type="date")
+     * @ORM\Column(name="dateResa", type="date", nullable=true)
      */
     private $dateResa;
     
@@ -136,5 +141,28 @@ class Reservation
     public function getDemiJournee()
     {
         return $this->demiJournee;
+    }
+
+    /**
+     * Set dateResa
+     *
+     * @param \DateTime $dateResa
+     * @return Reservation
+     */
+    public function setDateResa($dateResa)
+    {
+        $this->dateResa = $dateResa;
+
+        return $this;
+    }
+
+    /**
+     * Get dateResa
+     *
+     * @return \DateTime
+     */
+    public function getDateResa()
+    {
+        return $this->dateResa;
     }
 }

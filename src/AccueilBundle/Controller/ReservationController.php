@@ -18,13 +18,18 @@ class ReservationController extends Controller
 
     public function billetAction(Request $request, $date, $dj, $places)
     {
-        // Test
-        $repositoryBillet = $this->getDoctrine()->getManager()->getRepository('AccueilBundle:Reservation')->countToday($date);
-        // Test
+        $em = $this->getDoctrine()->getManager();
 
+        // Si plus de 1000 billets ont été vendus, on redirige vers la page de réservation
+        $nb_billets = $em->getRepository('AccueilBundle:Billet')->getReservationDay($date);
+        if(($places + $nb_billets) > 1000)
+        {
+            return $this->redirectToRoute('reservation_date');
+        }
 
         $reservation = new Reservation();
 
+        // On crée autant de billet que demandé
         for($i = 0; $i != $places; $i++) {
             $billet[$i] = new Billet();
             $reservation->getBillet()->add($billet[$i]);
@@ -33,8 +38,8 @@ class ReservationController extends Controller
 
         $form = $this->createForm(ReservationType::class, $reservation);
 
+        // On enregistre la réservation et les billets
         if ($form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $reservation->setDemiJournee($dj);
             $date = date_create_from_format('Y-m-d', $date);
             $reservation->setDateResa($date);
@@ -52,8 +57,7 @@ class ReservationController extends Controller
             'date' => $date,
             'dj' => $dj,
             'places' => $places,
-            'form' => $form->createView(),
-            'dateResa' => $repositoryBillet
+            'form' => $form->createView()
         ));
     }
 }
