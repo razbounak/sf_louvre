@@ -9,3 +9,7 @@ reservation_date:
 reservation_billet:
     path:     /reservation/{date}/{dj}/{places}
     defaults: { _controller: AccueilBundle:Reservation:billet }
+
+recapitulatif:
+    path:     /recap/{id}
+    defaults: { _controller: AccueilBundle:Reservation:recap }

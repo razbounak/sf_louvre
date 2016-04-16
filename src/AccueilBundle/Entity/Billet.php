@@ -55,6 +55,13 @@ class Billet
      */
     private $dateNaissance;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="TarifReduit", type="boolean")
+     */
+    private $tarifReduit;
+
     public function __construct()
     {
         $this->pays = new ArrayCollection();
@@ -183,5 +190,28 @@ class Billet
     public function getPays()
     {
         return $this->pays;
+    }
+
+    /**
+     * Set tarifReduit
+     *
+     * @param boolean $tarifReduit
+     * @return Billet
+     */
+    public function setTarifReduit($tarifReduit)
+    {
+        $this->tarifReduit = $tarifReduit;
+
+        return $this;
+    }
+
+    /**
+     * Get tarifReduit
+     *
+     * @return boolean 
+     */
+    public function getTarifReduit()
+    {
+        return $this->tarifReduit;
     }
 }

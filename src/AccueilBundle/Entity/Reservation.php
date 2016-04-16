@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Reservation
 {
     /**
-     * @ORM\OneToMany(targetEntity="AccueilBundle\Entity\Billet", mappedBy="Reservation")
+     * @ORM\OneToMany(targetEntity="AccueilBundle\Entity\Billet", mappedBy="reservation")
      */
     private $billets;
 

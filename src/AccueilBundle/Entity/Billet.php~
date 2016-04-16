@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Billet
 {
     /**
-     * @ORM\ManyToOne(targetEntity="AccueilBundle\Entity\Reservation")
+     * @ORM\ManyToOne(targetEntity="AccueilBundle\Entity\Reservation", inversedBy="billets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $reservation;
@@ -54,6 +54,13 @@ class Billet
      * @ORM\Column(name="dateNaissance", type="date")
      */
     private $dateNaissance;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="TarifReduit", type="boolean")
+     */
+    private $tarifReduit;
 
     public function __construct()
     {
@@ -160,5 +167,28 @@ class Billet
     public function getReservation()
     {
         return $this->reservation;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param \AccueilBundle\Entity\Pays $pays
+     * @return Billet
+     */
+    public function setPays(\AccueilBundle\Entity\Pays $pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return \AccueilBundle\Entity\Pays 
+     */
+    public function getPays()
+    {
+        return $this->pays;
     }
 }

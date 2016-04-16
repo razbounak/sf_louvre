@@ -77,7 +77,21 @@
                     return [false, natDays[i][2] + '_day'];
                 }
             }
-            return [true, ''];
+            return DisableSunday(date);
+        }
+
+        function DisableSunday(date) {
+
+            var day = date.getDay();
+            if (day == 0) {
+
+                return [false] ;
+
+            } else {
+
+                return [true, ''];
+            }
+
         }
 
         $('.date').datepicker({

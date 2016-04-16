@@ -1,0 +1,32 @@
+{% extends "AccueilBundle::layout.html.twig" %}
+
+{% block title %}
+    Récapitulatif - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="menu">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="jumbotron">
+                    <h1>Récapitulatif</h1>
+                        <h2>{{ reservation.email }}</h2>
+                        {% if reservation.demiJournee == 1 %}
+                            <h2>Demi journée</h2>
+                        {% elseif reservation.demiJournee == 0 %}
+                            <h2>Journée entière</h2>
+                        {% endif %}
+                        <h2>{{ reservation.dateResa|date('d-m-Y') }}</h2>
+
+                        {% for gens in reservation.billets %}
+                            <h2>{{ gens.nom~' '~gens.prenom }}</h2>
+                            <p>{{ gens.dateNaissance|date('d-m-Y') }}</p>
+                            {% if gens.TarifReduit == 1 %}
+                                <p>Tarif réduit | 10€</p>
+                            {% endif %}
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -2,7 +2,6 @@
 
 namespace AccueilBundle\Controller;
 
-use AccueilBundle\AccueilBundle;
 use AccueilBundle\Entity\Billet;
 use AccueilBundle\Entity\Reservation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -50,7 +49,7 @@ class ReservationController extends Controller
             }
             $em->flush();
 
-            return $this->redirect($this->generateUrl('accueil_homepage'));
+            return $this->redirect($this->generateUrl('recapitulatif', array('id' => $reservation->getId())));
         }
 
         return $this->render('AccueilBundle:Reservation:reservation.html.twig', array(
@@ -58,6 +57,16 @@ class ReservationController extends Controller
             'dj' => $dj,
             'places' => $places,
             'form' => $form->createView()
+        ));
+    }
+
+    public function recapAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $reservation = $em->getRepository('AccueilBundle:Reservation')->find($id);
+
+        return $this->render('AccueilBundle:Reservation:recap.html.twig', array(
+            'reservation' => $reservation
         ));
     }
 }
