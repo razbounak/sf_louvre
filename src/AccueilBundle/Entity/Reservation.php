@@ -52,6 +52,12 @@ class Reservation
      * @ORM\Column(name="dateResa", type="date", nullable=true)
      */
     private $dateResa;
+
+    /**
+     * @var integer
+     * @ORM\Column(name="prixTotal", type="integer")
+     */
+    private $prixTotal;
     
     public function __construct()
     {
@@ -197,5 +203,28 @@ class Reservation
     public function getBillets()
     {
         return $this->billets;
+    }
+
+    /**
+     * Set prixTotal
+     *
+     * @param integer $prixTotal
+     * @return Reservation
+     */
+    public function setPrixTotal($prixTotal)
+    {
+        $this->prixTotal = $prixTotal;
+
+        return $this;
+    }
+
+    /**
+     * Get prixTotal
+     *
+     * @return integer 
+     */
+    public function getPrixTotal()
+    {
+        return $this->prixTotal;
     }
 }

@@ -21,10 +21,22 @@
                         {% for gens in reservation.billets %}
                             <h2><strong>{{ gens.nom~' '~gens.prenom }}</strong></h2>
                             <p>{{ gens.dateNaissance|date('d-m-Y') }}</p>
-                            {% if gens.TarifReduit == 1 %}
-                                <p>Tarif réduit | 10€</p>
-                            {% endif %}
+                            <p>{{ gens.tarifs.nom }} | {{ gens.tarifs.prix }}€</p>
+                            <p>{{ gens.pays.nomFr }}</p>
                         {% endfor %}
+                        <p><strong>Total : {{ reservation.prixTotal }} €</strong></p>
+
+                        <form action="" method="POST">
+                            <script
+                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="pk_test_MQEN4HNJ1LfQGUSCRuo09lOL"
+                                    data-amount="{{ reservation.prixTotal }}00"
+                                    data-name="Musée du Louvre"
+                                    data-description="Billets (€{{ reservation.prixTotal }}.00)"
+                                    data-image="http://www.iphon.fr/public/2009/Q4/.musee-louvre-iphone-1_s.jpg"
+                                    data-locale="auto">
+                            </script>
+                        </form>
                 </div>
             </div>
         </div>

@@ -46,10 +46,6 @@ class ReservationController extends Controller
             $reservation->setDateResa($date);
             for($i = 0; $i != $places; $i++)
             {
-                //$prix = $em->getRepository('AccueilBundle:Billet')->find($billet[$i]->getId())->getTarifs()->getPrix();
-                var_dump($billet[$i]->getTarifs());die();
-                $prix = $billet[$i]->getTarifs()->getPrix();
-                $prix_total = $prix_total + $prix;
                 $dateBebe = clone $billet[$i]->getDateNaissance();
                 $dateSenior = clone $billet[$i]->getDateNaissance();
                 $dateEnfant = clone $billet[$i]->getDateNaissance();
@@ -66,9 +62,12 @@ class ReservationController extends Controller
                     $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(3));
                 else
                     $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(1));
+                $prix = $billet[$i]->getTarifs()->getPrix();
+                $prix_total = $prix_total + $prix;
                 $em->persist($billet[$i]);
 
             }
+            $reservation->setPrixTotal($prix_total);
             $em->persist($reservation);
             $em->flush();
 
