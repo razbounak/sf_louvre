@@ -18,6 +18,8 @@ class ReservationController extends Controller
     public function billetAction(Request $request, $date, $dj, $places)
     {
         $em = $this->getDoctrine()->getManager();
+        $datetime = new \DateTime();
+        $prix_total = 0;
 
         // Si plus de 1000 billets ont été vendus, on redirige vers la page de réservation
         $nb_billets = $em->getRepository('AccueilBundle:Billet')->getReservationDay($date);
@@ -42,11 +44,32 @@ class ReservationController extends Controller
             $reservation->setDemiJournee($dj);
             $date = date_create_from_format('Y-m-d', $date);
             $reservation->setDateResa($date);
-            $em->persist($reservation);
             for($i = 0; $i != $places; $i++)
             {
+                //$prix = $em->getRepository('AccueilBundle:Billet')->find($billet[$i]->getId())->getTarifs()->getPrix();
+                var_dump($billet[$i]->getTarifs());die();
+                $prix = $billet[$i]->getTarifs()->getPrix();
+                $prix_total = $prix_total + $prix;
+                $dateBebe = clone $billet[$i]->getDateNaissance();
+                $dateSenior = clone $billet[$i]->getDateNaissance();
+                $dateEnfant = clone $billet[$i]->getDateNaissance();
+                $dateBebe->add(new \DateInterval('P4Y'));
+                $dateSenior->add(new \DateInterval('P60Y'));
+                $dateEnfant->add(new \DateInterval('P12Y'));
+                if($dateBebe > $datetime)
+                    $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(6));
+                elseif($dateBebe < $datetime && $dateEnfant > $datetime)
+                    $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(2));
+                elseif($billet[$i]->getTarifReduit() == true)
+                    $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(4));
+                elseif($dateSenior < $datetime)
+                    $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(3));
+                else
+                    $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(1));
                 $em->persist($billet[$i]);
+
             }
+            $em->persist($reservation);
             $em->flush();
 
             return $this->redirect($this->generateUrl('recapitulatif', array('id' => $reservation->getId())));

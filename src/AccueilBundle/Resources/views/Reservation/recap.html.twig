@@ -19,7 +19,7 @@
                         <h2>{{ reservation.dateResa|date('d-m-Y') }}</h2>
 
                         {% for gens in reservation.billets %}
-                            <h2>{{ gens.nom~' '~gens.prenom }}</h2>
+                            <h2><strong>{{ gens.nom~' '~gens.prenom }}</strong></h2>
                             <p>{{ gens.dateNaissance|date('d-m-Y') }}</p>
                             {% if gens.TarifReduit == 1 %}
                                 <p>Tarif réduit | 10€</p>

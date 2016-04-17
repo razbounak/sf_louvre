@@ -14,6 +14,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Billet
 {
     /**
+     * @ORM\ManyToOne(targetEntity="AccueilBundle\Entity\Tarifs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $tarifs;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AccueilBundle\Entity\Reservation", inversedBy="billets")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -213,5 +219,28 @@ class Billet
     public function getTarifReduit()
     {
         return $this->tarifReduit;
+    }
+
+    /**
+     * Set tarifs
+     *
+     * @param \AccueilBundle\Entity\Tarifs $tarifs
+     * @return Billet
+     */
+    public function setTarifs(\AccueilBundle\Entity\Tarifs $tarifs)
+    {
+        $this->tarifs = $tarifs;
+
+        return $this;
+    }
+
+    /**
+     * Get tarifs
+     *
+     * @return \AccueilBundle\Entity\Tarifs 
+     */
+    public function getTarifs()
+    {
+        return $this->tarifs;
     }
 }
