@@ -56,7 +56,7 @@ class ReservationController extends Controller
                     $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(6));
                 elseif($dateBebe < $datetime && $dateEnfant > $datetime)
                     $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(2));
-                elseif($billet[$i]->getTarifReduit() == true)
+                elseif($billet[$i]->getTarifReduit() === true)
                     $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(4));
                 elseif($dateSenior < $datetime)
                     $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(3));
