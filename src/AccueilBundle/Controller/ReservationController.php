@@ -10,6 +10,13 @@ use AccueilBundle\Form\Type\ReservationType;
 
 class ReservationController extends Controller
 {
+    public $em;
+
+    public function __construct()
+    {
+        $em = $this->getDoctrine()->getManager();
+    }
+
     public function dateAction()
     {
         return $this->render('AccueilBundle:Reservation:date.html.twig');
@@ -17,23 +24,25 @@ class ReservationController extends Controller
 
     public function billetAction(Request $request, $date, $dj, $places)
     {
-        $em = $this->getDoctrine()->getManager();
-        $datetime = new \DateTime();
         $prix_total = 0;
 
         // Si plus de 1000 billets ont été vendus, on redirige vers la page de réservation
         $nb_billets = $em->getRepository('AccueilBundle:Billet')->getReservationDay($date);
-        if(($places + $nb_billets) > 1000)
+        if(($places + $nb_billets) > 1000) {
             return $this->redirectToRoute('reservation_date');
+        }
 
         $reservation = new Reservation();
+
         // On crée autant de billets que demandé
         for($i = 0; $i != $places; $i++) {
             $billets[$i] = new Billet();
             $reservation->getBillet()->add($billets[$i]);
             $billets[$i]->setReservation($reservation);
         }
+
         $form = $this->createForm(ReservationType::class, $reservation);
+
         // On enregistre la réservation et les billets
         if ($form->handleRequest($request)->isValid()) {
             $reservation->setDemiJournee($dj);
@@ -52,6 +61,7 @@ class ReservationController extends Controller
             $reservation->setPrixTotal($prix_total);
             $em->persist($reservation);
             $em->flush();
+
             return $this->redirect($this->generateUrl('recapitulatif', array('id' => $reservation->getId())));
         }
         return $this->render('AccueilBundle:Reservation:reservation.html.twig', array(
