@@ -20,18 +20,18 @@ class ReservationController extends Controller
         $em = $this->getDoctrine()->getManager();
         $datetime = new \DateTime();
         $prix_total = 0;
+
         // Si plus de 1000 billets ont été vendus, on redirige vers la page de réservation
         $nb_billets = $em->getRepository('AccueilBundle:Billet')->getReservationDay($date);
         if(($places + $nb_billets) > 1000)
-        {
             return $this->redirectToRoute('reservation_date');
-        }
+
         $reservation = new Reservation();
-        // On crée autant de billet que demandé
+        // On crée autant de billets que demandé
         for($i = 0; $i != $places; $i++) {
-            $billet[$i] = new Billet();
-            $reservation->getBillet()->add($billet[$i]);
-            $billet[$i]->setReservation($reservation);
+            $billets[$i] = new Billet();
+            $reservation->getBillet()->add($billets[$i]);
+            $billets[$i]->setReservation($reservation);
         }
         $form = $this->createForm(ReservationType::class, $reservation);
         // On enregistre la réservation et les billets
@@ -41,26 +41,13 @@ class ReservationController extends Controller
             $reservation->setDateResa($date);
             for($i = 0; $i != $places; $i++)
             {
-                $dateBebe = clone $billet[$i]->getDateNaissance();
-                $dateSenior = clone $billet[$i]->getDateNaissance();
-                $dateEnfant = clone $billet[$i]->getDateNaissance();
-                $dateBebe->add(new \DateInterval('P4Y'));
-                $dateSenior->add(new \DateInterval('P60Y'));
-                $dateEnfant->add(new \DateInterval('P12Y'));
+                // Attribution du tarif adapté à chaque personne
+                $attribution = $this->container->get('accueil.attribution');
+                $attribution->attributionTarifs($billets[$i]);
 
-                if($dateBebe > $datetime)
-                    $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(6));
-                elseif($dateBebe < $datetime && $dateEnfant > $datetime)
-                    $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(2));
-                elseif($billet[$i]->getTarifReduit() === true)
-                    $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(4));
-                elseif($dateSenior < $datetime)
-                    $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(3));
-                else
-                    $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(1));
-                $prix = $billet[$i]->getTarifs()->getPrix();
+                $prix = $billets[$i]->getTarifs()->getPrix();
                 $prix_total = $prix_total + $prix;
-                $em->persist($billet[$i]);
+                $em->persist($billets[$i]);
             }
             $reservation->setPrixTotal($prix_total);
             $em->persist($reservation);

@@ -22,6 +22,8 @@ class LoadTarifs implements FixtureInterface
         foreach ($tab as $row) {
             $tarifs = new Tarifs();
 
+            // Ajouter Slug
+            
             $tarifs->setNom($row['nom']);
             $tarifs->setInfo($row['info']);
             $tarifs->setPrix($row['prix']);
