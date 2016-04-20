@@ -1,6 +1,6 @@
 <?php
 
-namespace AccueilBundle\Form;
+namespace AccueilBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

@@ -6,7 +6,7 @@ use AccueilBundle\Entity\Billet;
 use AccueilBundle\Entity\Reservation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AccueilBundle\Form\ReservationType;
+use AccueilBundle\Form\Type\ReservationType;
 
 class ReservationController extends Controller
 {
@@ -20,25 +20,20 @@ class ReservationController extends Controller
         $em = $this->getDoctrine()->getManager();
         $datetime = new \DateTime();
         $prix_total = 0;
-
         // Si plus de 1000 billets ont été vendus, on redirige vers la page de réservation
         $nb_billets = $em->getRepository('AccueilBundle:Billet')->getReservationDay($date);
         if(($places + $nb_billets) > 1000)
         {
             return $this->redirectToRoute('reservation_date');
         }
-
         $reservation = new Reservation();
-
         // On crée autant de billet que demandé
         for($i = 0; $i != $places; $i++) {
             $billet[$i] = new Billet();
             $reservation->getBillet()->add($billet[$i]);
             $billet[$i]->setReservation($reservation);
         }
-
         $form = $this->createForm(ReservationType::class, $reservation);
-
         // On enregistre la réservation et les billets
         if ($form->handleRequest($request)->isValid()) {
             $reservation->setDemiJournee($dj);
@@ -52,6 +47,7 @@ class ReservationController extends Controller
                 $dateBebe->add(new \DateInterval('P4Y'));
                 $dateSenior->add(new \DateInterval('P60Y'));
                 $dateEnfant->add(new \DateInterval('P12Y'));
+
                 if($dateBebe > $datetime)
                     $billet[$i]->setTarifs($em->getRepository('AccueilBundle:Tarifs')->find(6));
                 elseif($dateBebe < $datetime && $dateEnfant > $datetime)
@@ -65,15 +61,12 @@ class ReservationController extends Controller
                 $prix = $billet[$i]->getTarifs()->getPrix();
                 $prix_total = $prix_total + $prix;
                 $em->persist($billet[$i]);
-
             }
             $reservation->setPrixTotal($prix_total);
             $em->persist($reservation);
             $em->flush();
-
             return $this->redirect($this->generateUrl('recapitulatif', array('id' => $reservation->getId())));
         }
-
         return $this->render('AccueilBundle:Reservation:reservation.html.twig', array(
             'date' => $date,
             'dj' => $dj,
@@ -86,7 +79,6 @@ class ReservationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $reservation = $em->getRepository('AccueilBundle:Reservation')->find($id);
-
         return $this->render('AccueilBundle:Reservation:recap.html.twig', array(
             'reservation' => $reservation
         ));
