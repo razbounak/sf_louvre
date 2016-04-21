@@ -68,6 +68,13 @@ class Billet
      */
     private $tarifReduit;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string")
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->pays = new ArrayCollection();
@@ -219,5 +226,28 @@ class Billet
     public function getTarifReduit()
     {
         return $this->tarifReduit;
+    }
+
+    /**
+     * Set tarifs
+     *
+     * @param \AccueilBundle\Entity\Tarifs $tarifs
+     * @return Billet
+     */
+    public function setTarifs(\AccueilBundle\Entity\Tarifs $tarifs)
+    {
+        $this->tarifs = $tarifs;
+
+        return $this;
+    }
+
+    /**
+     * Get tarifs
+     *
+     * @return \AccueilBundle\Entity\Tarifs 
+     */
+    public function getTarifs()
+    {
+        return $this->tarifs;
     }
 }

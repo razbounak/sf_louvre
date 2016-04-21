@@ -28,16 +28,16 @@ class AccueilAttributionTarifs
         $dateEnfant->add(new \DateInterval('P12Y'));
 
         if ($dateBebe > $datetime)
-            $tarifsId = 6;
+            $slug = 'bebe';
         elseif ($dateBebe < $datetime && $dateEnfant > $datetime)
-            $tarifsId = 2;
+            $slug = 'enfant';
         elseif ($billet->getTarifReduit() === true)
-            $tarifsId = 4;
+            $slug = 'reduit';
         elseif ($dateSenior < $datetime)
-            $tarifsId = 3;
+            $slug = 'senior';
         else
-            $tarifsId = 1;
+            $slug = 'normal';
 
-        $billet->setTarifs($this->em->getRepository('AccueilBundle:Tarifs')->find($tarifsId));
+        $billet->setTarifs($this->em->getRepository('AccueilBundle:Tarifs')->findOneBySlug($slug));
     }
 }

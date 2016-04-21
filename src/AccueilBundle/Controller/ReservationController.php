@@ -10,13 +10,6 @@ use AccueilBundle\Form\Type\ReservationType;
 
 class ReservationController extends Controller
 {
-    public $em;
-
-    public function __construct()
-    {
-        $em = $this->getDoctrine()->getManager();
-    }
-
     public function dateAction()
     {
         return $this->render('AccueilBundle:Reservation:date.html.twig');
@@ -24,6 +17,7 @@ class ReservationController extends Controller
 
     public function billetAction(Request $request, $date, $dj, $places)
     {
+        $em = $this->getDoctrine()->getManager();
         $prix_total = 0;
 
         // Si plus de 1000 billets ont été vendus, on redirige vers la page de réservation
