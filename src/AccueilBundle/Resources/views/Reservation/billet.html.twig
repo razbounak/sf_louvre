@@ -13,8 +13,11 @@
 
 
 {% for gens in reservation.billets %}
-    <h2><strong>{{ gens.nom~' '~gens.prenom }}</strong></h2>
-    <p>{{ gens.dateNaissance|date('d-m-Y') }}</p>
-    <p>{{ gens.tarifs.nom }} | {{ gens.tarifs.prix }}€</p>
-    <p>{{ gens.pays.nomFr }}</p>
+    <page>
+        <h2><strong>{{ gens.nom~' '~gens.prenom }}</strong></h2>
+        <p>{{ gens.dateNaissance|date('d-m-Y') }}</p>
+        <p>{{ gens.tarifs.nom }} | {{ gens.tarifs.prix }}€</p>
+        <p>{{ gens.pays.nomFr }}</p>
+        <qrcode value="{{ gens.code }}" ec="H" style="width: 50mm; background-color: white; color: black;"></qrcode>
+    </page>
 {% endfor %}

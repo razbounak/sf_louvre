@@ -105,10 +105,10 @@ class ReservationController extends Controller
 
         // Envoi du mail avec les billets
         $message = \Swift_Message::newInstance()
-            ->setSubject('Hello Email')
-            ->setFrom('virtual.triathlon.manager@gmail.com')
-            ->setTo('virtual.triathlon.manager@gmail.com')
-            ->setBody('Hello man')
+            ->setSubject('Musée du louvre - Vos billets')
+            ->setFrom(array('virtual.triathlon.manager@gmail.com' => 'Musée du Louvre'))
+            ->setTo($reservation->getEmail())
+            ->setBody('Bonjour, vous trouverez vos billets en pièces jointes')
             ->attach(\Swift_Attachment::fromPath('PDF/billet_'.$id.'.pdf'));
         $this->get('mailer')->send($message);
 
