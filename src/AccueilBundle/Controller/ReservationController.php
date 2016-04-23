@@ -87,7 +87,6 @@ class ReservationController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // Insertion du Token de paiement dans la bdd
-        $request = Request::createFromGlobals();
         $stripe = $request->request->get('stripeToken');
         $reservation = $em->getRepository('AccueilBundle:Reservation')->find($id);
         $reservation->setStripeToken($stripe);
