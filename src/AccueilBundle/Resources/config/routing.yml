@@ -13,3 +13,7 @@ reservation_billet:
 recapitulatif:
     path:     /recap/{id}
     defaults: { _controller: AccueilBundle:Reservation:recap }
+
+paiement:
+    path:    /paiement/{id}
+    defaults: { _controller: AccueilBundle:Reservation:paiement }

@@ -58,6 +58,12 @@ class Reservation
      * @ORM\Column(name="prixTotal", type="integer")
      */
     private $prixTotal;
+
+    /**
+     * @var string
+     * @ORM\Column(name="stripeToken", type="string", nullable=true)
+     */
+    private $stripeToken;
     
     public function __construct()
     {
@@ -226,5 +232,28 @@ class Reservation
     public function getPrixTotal()
     {
         return $this->prixTotal;
+    }
+
+    /**
+     * Set stripeToken
+     *
+     * @param string $stripeToken
+     * @return Reservation
+     */
+    public function setStripeToken($stripeToken)
+    {
+        $this->stripeToken = $stripeToken;
+
+        return $this;
+    }
+
+    /**
+     * Get stripeToken
+     *
+     * @return string 
+     */
+    public function getStripeToken()
+    {
+        return $this->stripeToken;
     }
 }

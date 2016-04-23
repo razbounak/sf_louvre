@@ -71,9 +71,9 @@ class Billet
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string")
+     * @ORM\Column(name="code", type="string", length=255)
      */
-    private $slug;
+    private $code;
 
     public function __construct()
     {

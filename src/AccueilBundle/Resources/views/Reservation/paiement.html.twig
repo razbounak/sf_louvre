@@ -1,0 +1,25 @@
+{% extends "AccueilBundle::layout.html.twig" %}
+
+{% block title %}
+    Paiement - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="menu">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="jumbotron">
+                    <h2>Paiement accepté <span class="glyphicon glyphicon-ok"></span></h2>
+                    <p>
+                        <span class="glyphicon glyphicon-arrow-right"></span>
+                        Vos billets viennent de vous être envoyés par mail,
+                        pensez à vérifier vos courriers indésirables
+                        si vous ne l'avez pas reçu.
+                    </p>
+
+                    <button class="btn btn-primary"><span class="glyphicon glyphicon-home"></span> Retour à l'accueil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -58,6 +58,12 @@ class Reservation
      * @ORM\Column(name="prixTotal", type="integer")
      */
     private $prixTotal;
+
+    /**
+     * @var string
+     * @ORM\Column(name="stripeToken", type="string")
+     */
+    private $stripeToken;
     
     public function __construct()
     {
@@ -203,5 +209,28 @@ class Reservation
     public function getBillets()
     {
         return $this->billets;
+    }
+
+    /**
+     * Set prixTotal
+     *
+     * @param integer $prixTotal
+     * @return Reservation
+     */
+    public function setPrixTotal($prixTotal)
+    {
+        $this->prixTotal = $prixTotal;
+
+        return $this;
+    }
+
+    /**
+     * Get prixTotal
+     *
+     * @return integer 
+     */
+    public function getPrixTotal()
+    {
+        return $this->prixTotal;
     }
 }

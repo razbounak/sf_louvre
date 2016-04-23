@@ -7,6 +7,8 @@ use AccueilBundle\Entity\Reservation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AccueilBundle\Form\Type\ReservationType;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
 
 class ReservationController extends Controller
 {
@@ -48,6 +50,9 @@ class ReservationController extends Controller
                 $attribution = $this->container->get('accueil.attribution');
                 $attribution->attributionTarifs($billets[$i]);
 
+                $code = $billets[$i]->getNom().$billets[$i]->getId().$billets[$i]->getPrenom();
+                $billets[$i]->setCode($code);
+
                 $prix = $billets[$i]->getTarifs()->getPrix();
                 $prix_total = $prix_total + $prix;
                 $em->persist($billets[$i]);
@@ -69,9 +74,44 @@ class ReservationController extends Controller
     public function recapAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+
         $reservation = $em->getRepository('AccueilBundle:Reservation')->find($id);
+
         return $this->render('AccueilBundle:Reservation:recap.html.twig', array(
             'reservation' => $reservation
         ));
+    }
+
+    public function paiementAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // Insertion du Token de paiement dans la bdd
+        $request = Request::createFromGlobals();
+        $stripe = $request->request->get('stripeToken');
+        $reservation = $em->getRepository('AccueilBundle:Reservation')->find($id);
+        $reservation->setStripeToken($stripe);
+        $em->persist($reservation);
+        $em->flush();
+
+        // Création du PDF
+        $html = $this->renderView('AccueilBundle:Reservation:billet.html.twig', array(
+            'reservation'  => $reservation));
+
+        $html2pdf = $this->get('html2pdf_factory')->create();
+        $html2pdf->pdf->SetDisplayMode('real');
+        $html2pdf->writeHTML($html);
+        $html2pdf->pdf->Output($_SERVER['DOCUMENT_ROOT'].'PDF/billet_'.$id.'.pdf', 'F');
+
+        // Envoi du mail avec les billets
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Hello Email')
+            ->setFrom('virtual.triathlon.manager@gmail.com')
+            ->setTo('virtual.triathlon.manager@gmail.com')
+            ->setBody('Hello man')
+            ->attach(\Swift_Attachment::fromPath('PDF/billet_'.$id.'.pdf'));
+        $this->get('mailer')->send($message);
+
+        return $this->render('AccueilBundle:Reservation:paiement.html.twig');
     }
 }

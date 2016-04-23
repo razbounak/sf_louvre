@@ -68,6 +68,13 @@ class Billet
      */
     private $tarifReduit;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=255)
+     */
+    private $code;
+
     public function __construct()
     {
         $this->pays = new ArrayCollection();
@@ -242,5 +249,28 @@ class Billet
     public function getTarifs()
     {
         return $this->tarifs;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     * @return Billet
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string 
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 }

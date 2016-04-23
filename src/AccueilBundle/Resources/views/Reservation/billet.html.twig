@@ -1,0 +1,20 @@
+<img src=".{{ asset('img/logo.jpg') }}" width="200">
+
+<h2>Billets - Musée du louvre</h2>
+
+{% if reservation.demiJournee == 1 %}
+    <h2>{{ reservation.dateResa|date('d-m-Y') }} - Demi journée</h2>
+{% elseif reservation.demiJournee == 0 %}
+    <h2>{{ reservation.dateResa|date('d-m-Y') }} - Journée entière</h2>
+{% endif %}
+
+<p>Réservé le {{ reservation.dateJour|date('d-m-Y') }}</p>
+<p>{{ reservation.email }}</p>
+
+
+{% for gens in reservation.billets %}
+    <h2><strong>{{ gens.nom~' '~gens.prenom }}</strong></h2>
+    <p>{{ gens.dateNaissance|date('d-m-Y') }}</p>
+    <p>{{ gens.tarifs.nom }} | {{ gens.tarifs.prix }}€</p>
+    <p>{{ gens.pays.nomFr }}</p>
+{% endfor %}
