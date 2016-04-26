@@ -45,15 +45,21 @@ class ReservationController extends Controller
             for($i = 0; $i != $places; $i++)
             {
                 // Attribution du tarif adapté à chaque personne
-                $attribution = $this->container->get('accueil.attribution');
-                $attribution->attributionTarifs($billets[$i]);
+                $this->container->get('accueil.attribution')->attributionTarifs($billets[$i]);
 
+                // Attribution du code magique
                 $code = $billets[$i]->getNom().$billets[$i]->getId().$billets[$i]->getPrenom();
                 $billets[$i]->setCode($code);
 
+                $em->persist($billets[$i]);
+            }
+
+            //$this->container->get('accueil.attribution')->attributionFamille($reservation);
+
+            for($i = 0; $i != $places; $i++)
+            {
                 $prix = $billets[$i]->getTarifs()->getPrix();
                 $prix_total = $prix_total + $prix;
-                $em->persist($billets[$i]);
             }
             $reservation->setPrixTotal($prix_total);
             $em->persist($reservation);
@@ -98,7 +104,7 @@ class ReservationController extends Controller
         $html2pdf = $this->get('html2pdf_factory')->create();
         $html2pdf->pdf->SetDisplayMode('real');
         $html2pdf->writeHTML($html);
-        $html2pdf->pdf->Output($_SERVER['DOCUMENT_ROOT'].'PDF/billet_'.$id.'.pdf', 'F');
+        $html2pdf->pdf->Output($this->container->getParameter('kernel.root_dir').'/../web/PDF/billet_'.$id.'.pdf', 'F');
 
         // Envoi du mail avec les billets
         $message = \Swift_Message::newInstance()

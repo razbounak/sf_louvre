@@ -3,6 +3,7 @@
 namespace AccueilBundle\AttributionTarifs;
 
 use AccueilBundle\Entity\Billet;
+use AccueilBundle\Entity\Reservation;
 use Doctrine\ORM\EntityManager;
 
 class AccueilAttributionTarifs
@@ -16,7 +17,6 @@ class AccueilAttributionTarifs
 
     public function attributionTarifs(Billet $billet)
     {
-
         $datetime = new \DateTime();
 
         $dateBebe = clone $billet->getDateNaissance();
@@ -39,5 +39,10 @@ class AccueilAttributionTarifs
             $slug = 'normal';
 
         $billet->setTarifs($this->em->getRepository('AccueilBundle:Tarifs')->findOneBySlug($slug));
+    }
+
+    public function attributionFamille(Reservation $reservation)
+    {
+        //$this->em->getRepository('AccueilBundle:Billet')->findBy()
     }
 }

@@ -1,3 +1,10 @@
+<style>
+    .demipage{
+        height: 48%;
+    }
+</style>
+
+
 <img src=".{{ asset('img/logo.jpg') }}" width="200">
 
 <h2>Billets - Musée du louvre</h2>
@@ -13,11 +20,17 @@
 
 
 {% for gens in reservation.billets %}
-    <page>
-        <h2><strong>{{ gens.nom~' '~gens.prenom }}</strong></h2>
-        <p>{{ gens.dateNaissance|date('d-m-Y') }}</p>
-        <p>{{ gens.tarifs.nom }} | {{ gens.tarifs.prix }}€</p>
-        <p>{{ gens.pays.nomFr }}</p>
-        <qrcode value="{{ gens.code }}" ec="H" style="width: 50mm; background-color: white; color: black;"></qrcode>
-    </page>
+    {% if loop.index % 2 == 1 %}
+        <page>
+    {% endif %}
+        <div class="demipage">
+            <h2><strong>{{ gens.nom~' '~gens.prenom }}</strong></h2>
+            <p>{{ gens.dateNaissance|date('d-m-Y') }}</p>
+            <p>{{ gens.tarifs.nom }} | {{ gens.tarifs.prix }}€</p>
+            <p>{{ gens.pays.nomFr }}</p>
+            <qrcode value="{{ gens.code }}" ec="H" style="width: 50mm; background-color: white; color: black;"></qrcode>
+        </div>
+    {% if loop.index % 2 == 1 %}
+        </page>
+    {% endif %}
 {% endfor %}
