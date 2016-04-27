@@ -54,7 +54,7 @@ class ReservationController extends Controller
                 $em->persist($billets[$i]);
             }
 
-            //$this->container->get('accueil.attribution')->attributionFamille($reservation);
+            $this->container->get('accueil.attribution')->attributionFamille($reservation);
 
             for($i = 0; $i != $places; $i++)
             {

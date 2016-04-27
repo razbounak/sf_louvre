@@ -44,5 +44,20 @@ class AccueilAttributionTarifs
     public function attributionFamille(Reservation $reservation)
     {
         //$this->em->getRepository('AccueilBundle:Billet')->findBy()
+        /*
+         * Compter le nombre d'enfant et de parent
+         * Enfant / 2
+         * Parent / 2
+         * if(enfant >= 1 && parent >= 1)
+         * {
+         *     On prend le plus petit nombre des deux
+         *     while(pluspetitnombre != 0)
+         *     {
+         *         On met 2 enfant en famille
+         *         On met 2 parent en famille
+         *         pluspetitnombre--;
+         *     }
+         * }
+         */
     }
 }
